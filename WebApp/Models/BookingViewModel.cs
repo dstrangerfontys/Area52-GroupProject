@@ -20,4 +20,7 @@ public class BookingViewModel
     public decimal? GrossAmount { get; set; }
     public decimal? DiscountAmount { get; set; }
     public decimal? NetAmount { get; set; }
+
+    public int? ReservationId { get; set; }
+    public string? ReservationStatus { get; set; }
 }

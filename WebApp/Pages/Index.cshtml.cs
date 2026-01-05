@@ -7,11 +7,11 @@ namespace Area52.WebApp.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly IQuoteService _quoteService;
+    private readonly IReservationService _reservationService;
 
-    public IndexModel(IQuoteService quoteService)
+    public IndexModel(IReservationService reservationService)
     {
-        _quoteService = quoteService;
+        _reservationService = reservationService;
     }
 
     [BindProperty]
@@ -19,7 +19,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        // Startpagina, nog geen data nodig
     }
 
     public void OnPost()
@@ -44,11 +43,15 @@ public class IndexModel : PageModel
                     : 0
             };
 
-            var result = _quoteService.CalculateQuote(request);
+            // NIEUW: reservering aanmaken via domeinservice
+            var reservation = _reservationService.CreateReservation(request);
 
-            Booking.GrossAmount = result.GrossAmount;
-            Booking.DiscountAmount = result.DiscountAmount;
-            Booking.NetAmount = result.NetAmount;
+            // Prijs + reserveringsinfo terugzetten in ViewModel
+            Booking.GrossAmount = reservation.GrossAmount;
+            Booking.DiscountAmount = reservation.DiscountAmount;
+            Booking.NetAmount = reservation.NetAmount;
+            Booking.ReservationId = reservation.Id;
+            Booking.ReservationStatus = reservation.Status.ToString();
         }
         catch (Exception ex)
         {

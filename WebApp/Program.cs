@@ -9,6 +9,9 @@ builder.Services.AddScoped<IRateRepository, InMemoryRateRepository>();
 builder.Services.AddScoped<IPricingStrategyFactory, PricingStrategyFactory>();
 builder.Services.AddScoped<IQuoteService, QuoteService>();
 
+builder.Services.AddScoped<IReservationRepository, InMemoryReservationRepository>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

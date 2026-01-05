@@ -52,10 +52,15 @@
         </button>
     </form>
 
-    @if (Model.Booking.NetAmount.HasValue)
+    @if (Model.Booking.ReservationId.HasValue)
     {
         <section class="booking-result">
-            <h2>Indicatieve prijs</h2>
+            <h2>Reservering bevestigd</h2>
+
+            <p>Reserveringsnummer: <strong>@Model.Booking.ReservationId</strong></p>
+            <p>Status: @Model.Booking.ReservationStatus</p>
+
+            <h3>Prijsopbouw</h3>
             <p>Bruto: @Model.Booking.GrossAmount?.ToString("C")</p>
             <p>Korting: @Model.Booking.DiscountAmount?.ToString("C")</p>
             <p><strong>Netto: @Model.Booking.NetAmount?.ToString("C")</strong></p>
