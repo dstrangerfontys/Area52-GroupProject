@@ -1,10 +1,217 @@
 ﻿@page
-@model IndexModel
+@model Area52.WebApp.Pages.IndexModel
+@using Area52.Core.Domain
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Area 52 — Vakantiepark in de Natuur";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <picture class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1920&q=80" alt="Bungalow in de natuur" loading="eager">
+    </picture>
+    <span class="hero-overlay" aria-hidden="true"></span>
+
+    <hgroup class="hero-text">
+        <p class="hero-subtitle">Vakantiepark in het hart van de natuur</p>
+        <h1 class="hero-title">Ontsnap naar <em>rust</em> & ruimte</h1>
+        <p class="hero-description">Ontdek onze comfortabele bungalows, sfeervolle chalets en ruime kampeerplaatsen midden in de Nederlandse natuur. Uw perfecte vakantie begint hier.</p>
+    </hgroup>
+
+    <form class="booking-widget" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <label class="booking-field">
+            <span>Inchecken</span>
+            <input asp-for="Booking.CheckIn" type="date" />
+            <span asp-validation-for="Booking.CheckIn"></span>
+        </label>
+
+        <label class="booking-field">
+            <span>Uitchecken</span>
+            <input asp-for="Booking.CheckOut" type="date" />
+            <span asp-validation-for="Booking.CheckOut"></span>
+        </label>
+
+        <label class="booking-field">
+            <span>Gasten</span>
+            <input asp-for="Booking.Guests" type="number" min="1" />
+            <span asp-validation-for="Booking.Guests"></span>
+        </label>
+
+        <label class="booking-field">
+            <span>Accommodatie</span>
+            <select asp-for="Booking.Type"
+                    asp-items="Html.GetEnumSelectList<AccommodationType>()">
+            </select>
+            <span asp-validation-for="Booking.Type"></span>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-search">
+            Zoeken
+        </button>
+    </form>
+
+    @if (Model.Booking.NetAmount.HasValue)
+    {
+        <section class="booking-result">
+            <h2>Indicatieve prijs</h2>
+            <p>Bruto: @Model.Booking.GrossAmount?.ToString("C")</p>
+            <p>Korting: @Model.Booking.DiscountAmount?.ToString("C")</p>
+            <p><strong>Netto: @Model.Booking.NetAmount?.ToString("C")</strong></p>
+        </section>
+    }
+</section>
+
+<section class="trust-section" aria-labelledby="trust-heading">
+    <h2 id="trust-heading" class="visually-hidden">Onze beloftes</h2>
+    <ul class="trust-list">
+        <li class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+            <h3>Geen verborgen kosten</h3>
+            <p>De prijs die u ziet is de prijs die u betaalt. Volledig transparant.</p>
+        </li>
+        <li class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+            </svg>
+            <h3>Gratis annuleren</h3>
+            <p>Tot 48 uur voor aankomst kosteloos annuleren of omboeken.</p>
+        </li>
+        <li class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3>Flexibel inchecken</h3>
+            <p>Check in vanaf 15:00 en uit tot 10:00. Vroeg of laat? Vraag het ons.</p>
+        </li>
+        <li class="trust-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+            </svg>
+            <h3>24/7 bereikbaar</h3>
+            <p>Ons team staat dag en nacht voor u klaar bij vragen of hulp.</p>
+        </li>
+    </ul>
+</section>
+
+<section class="offers-section" id="aanbiedingen" aria-labelledby="offers-heading">
+    <header class="offers-header">
+        <hgroup>
+            <h2 id="offers-heading" class="offers-title">Seizoens<em>aanbiedingen</em></h2>
+            <p class="offers-subtitle">Profiteer van onze speciale deals en geniet van een onvergetelijke vakantie tegen de beste prijs.</p>
+        </hgroup>
+        <a href="#" class="btn btn-outline">Alle aanbiedingen bekijken</a>
+    </header>
+
+    <ul class="offers-grid">
+        <li>
+            <article class="offer-card">
+                <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80" alt="Winterse bungalow" class="offer-card-bg" loading="lazy">
+                <data class="offer-card-price" value="89">Vanaf €89 <span>/nacht</span></data>
+                <header class="offer-card-content">
+                    <span class="offer-tag">Winter Special</span>
+                    <h3 class="offer-card-title">Winterse Gezelligheid</h3>
+                    <p class="offer-card-desc">Geniet van knusse avonden bij de open haard in onze verwarmde bungalows. Inclusief welkomstpakket.</p>
+                </header>
+            </article>
+        </li>
+        <li>
+            <article class="offer-card">
+                <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80" alt="Kamperen in de natuur" class="offer-card-bg" loading="lazy">
+                <data class="offer-card-price" value="45">Vanaf €45 <span>/nacht</span></data>
+                <header class="offer-card-content">
+                    <span class="offer-tag">Camping Deal</span>
+                    <h3 class="offer-card-title">Kampeer Avontuur</h3>
+                    <p class="offer-card-desc">Terug naar de natuur op onze ruime kampeerplaatsen.</p>
+                </header>
+            </article>
+        </li>
+        <li>
+            <article class="offer-card">
+                <img src="https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=800&q=80" alt="Familie vakantie" class="offer-card-bg" loading="lazy">
+                <data class="offer-card-price" value="159">Vanaf €159 <span>/nacht</span></data>
+                <header class="offer-card-content">
+                    <span class="offer-tag">Familie Favoriet</span>
+                    <h3 class="offer-card-title">Familieweek</h3>
+                    <p class="offer-card-desc">7 nachten verblijven, 5 nachten betalen. Ideaal voor gezinnen.</p>
+                </header>
+            </article>
+        </li>
+        <li>
+            <article class="offer-card">
+                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80" alt="Luxe villa" class="offer-card-bg" loading="lazy">
+                <data class="offer-card-price" value="299">Vanaf €299 <span>/nacht</span></data>
+                <header class="offer-card-content">
+                    <span class="offer-tag">Luxe Verblijf</span>
+                    <h3 class="offer-card-title">Villa Exclusief</h3>
+                    <p class="offer-card-desc">Ultieme luxe in onze prachtige villa's met privézwembad en sauna. Perfect voor grote gezelschappen.</p>
+                </header>
+            </article>
+        </li>
+        <li>
+            <article class="offer-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Romantisch uitzicht" class="offer-card-bg" loading="lazy">
+                <data class="offer-card-price" value="119">Vanaf €119 <span>/nacht</span></data>
+                <header class="offer-card-content">
+                    <span class="offer-tag">Romantisch</span>
+                    <h3 class="offer-card-title">Duo Retreat</h3>
+                    <p class="offer-card-desc">Romantisch weekend inclusief ontbijt.</p>
+                </header>
+            </article>
+        </li>
+    </ul>
+</section>
+
+<section class="accommodations-section" id="accommodaties" aria-labelledby="accommodations-heading">
+    <header class="accommodations-header">
+        <h2 id="accommodations-heading" class="accommodations-title">Onze Accommodaties</h2>
+        <p class="accommodations-subtitle">Van knusse chalets tot ruime villa's — voor elk wat wils in het groen.</p>
+    </header>
+
+    <ul class="accommodations-grid">
+        <li>
+            <article class="accommodation-card">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                <h3>Bungalows</h3>
+                <p>Comfortabel en compleet ingericht voor 2-6 personen</p>
+                <data class="accommodation-price" value="79">Vanaf €79/nacht</data>
+            </article>
+        </li>
+        <li>
+            <article class="accommodation-card">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+                </svg>
+                <h3>Chalets</h3>
+                <p>Sfeervolle houten huisjes met authentieke uitstraling</p>
+                <data class="accommodation-price" value="99">Vanaf €99/nacht</data>
+            </article>
+        </li>
+        <li>
+            <article class="accommodation-card">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636" />
+                </svg>
+                <h3>Kampeerplaatsen</h3>
+                <p>Ruime plekken met elektra en modern sanitair</p>
+                <data class="accommodation-price" value="35">Vanaf €35/nacht</data>
+            </article>
+        </li>
+        <li>
+            <article class="accommodation-card">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                </svg>
+                <h3>Villa's</h3>
+                <p>Luxe verblijf met privézwembad en wellness</p>
+                <data class="accommodation-price" value="249">Vanaf €249/nacht</data>
+            </article>
+        </li>
+    </ul>
+</section>

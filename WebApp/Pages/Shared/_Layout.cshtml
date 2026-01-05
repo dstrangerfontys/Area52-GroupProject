@@ -1,51 +1,81 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Area 52</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">WebApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <header class="header" id="header">
+        <a href="#" class="logo">
+            <span class="logo-icon">52</span>
+            <span class="logo-text">Area 52</span>
+        </a>
+
+        <nav class="nav">
+            <a href="#accommodaties">Accommodaties</a>
+            <a href="#aanbiedingen">Aanbiedingen</a>
+            <a href="#activiteiten">Activiteiten</a>
+            <a href="#over-ons">Over Ons</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <nav class="auth-buttons">
+            <a href="#" class="btn btn-ghost">Inloggen</a>
+            <a href="#" class="btn btn-primary">Account aanmaken</a>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - WebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="footer" id="contact">
+        <section class="footer-brand">
+            <a href="#" class="logo">
+                <span class="logo-icon">52</span>
+                <span class="logo-text">Area 52</span>
+            </a>
+            <p>Uw perfecte vakantie begint bij Area 52. Gelegen in het hart van de Nederlandse natuur, bieden wij rust, ruimte en onvergetelijke momenten voor het hele gezin.</p>
+        </section>
+
+        <nav aria-label="Accommodaties">
+            <h4>Accommodaties</h4>
+            <ul>
+                <li><a href="#">Bungalows</a></li>
+                <li><a href="#">Chalets</a></li>
+                <li><a href="#">Kampeerplaatsen</a></li>
+                <li><a href="#">Villa's</a></li>
+            </ul>
+        </nav>
+
+        <nav aria-label="Informatie">
+            <h4>Informatie</h4>
+            <ul>
+                <li><a href="#">Over ons</a></li>
+                <li><a href="#">Faciliteiten</a></li>
+                <li><a href="#">Activiteiten</a></li>
+                <li><a href="#">Veelgestelde vragen</a></li>
+            </ul>
+        </nav>
+
+        <section aria-label="Contactgegevens">
+            <h4>Contact</h4>
+            <address>
+                <a href="tel:+31851234567">+31 (0)85 123 4567</a>
+                <a href="mailto:info@area52.nl">info@area52.nl</a>
+                <p>Bosweg 52, Veluwe</p>
+                <a href="#">Routebeschrijving</a>
+            </address>
+        </section>
+
+        <small class="footer-bottom">
+            <p>&copy; 2024 Area 52 Vakantiepark. Alle rechten voorbehouden.</p>
+            <p>Privacy Policy · Algemene Voorwaarden · Cookie Instellingen</p>
+        </small>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
