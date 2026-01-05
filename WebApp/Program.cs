@@ -5,11 +5,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<IRateRepository, InMemoryRateRepository>();
+var connectionString = builder.Configuration.GetConnectionString("Area52Database");
+
+builder.Services.AddScoped<IRateRepository>(sp =>
+    new MySqlRateRepository(connectionString!));
+
+builder.Services.AddScoped<IReservationRepository>(sp =>
+    new MySqlReservationRepository(connectionString!));
+
 builder.Services.AddScoped<IPricingStrategyFactory, PricingStrategyFactory>();
 builder.Services.AddScoped<IQuoteService, QuoteService>();
-
-builder.Services.AddScoped<IReservationRepository, InMemoryReservationRepository>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 
 var app = builder.Build();

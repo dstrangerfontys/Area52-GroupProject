@@ -8,14 +8,18 @@
 
 <section class="hero">
     <picture class="hero-bg">
-        <img src="https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1920&q=80" alt="Bungalow in de natuur" loading="eager">
+        <img src="https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1920&q=80"
+             alt="Bungalow in de natuur" loading="eager">
     </picture>
     <span class="hero-overlay" aria-hidden="true"></span>
 
     <hgroup class="hero-text">
         <p class="hero-subtitle">Vakantiepark in het hart van de natuur</p>
-        <h1 class="hero-title">Ontsnap naar <em>rust</em> & ruimte</h1>
-        <p class="hero-description">Ontdek onze comfortabele bungalows, sfeervolle chalets en ruime kampeerplaatsen midden in de Nederlandse natuur. Uw perfecte vakantie begint hier.</p>
+        <h1 class="hero-title">Ontsnap naar <em>rust</em> &amp; ruimte</h1>
+        <p class="hero-description">
+            Ontdek onze comfortabele bungalows, sfeervolle chalets en ruime kampeerplaatsen midden in de Nederlandse natuur.
+            Uw perfecte vakantie begint hier.
+        </p>
     </hgroup>
 
     <form class="booking-widget" method="post">
@@ -51,22 +55,22 @@
             Zoeken
         </button>
     </form>
-
-    @if (Model.Booking.ReservationId.HasValue)
-    {
-        <section class="booking-result">
-            <h2>Reservering bevestigd</h2>
-
-            <p>Reserveringsnummer: <strong>@Model.Booking.ReservationId</strong></p>
-            <p>Status: @Model.Booking.ReservationStatus</p>
-
-            <h3>Prijsopbouw</h3>
-            <p>Bruto: @Model.Booking.GrossAmount?.ToString("C")</p>
-            <p>Korting: @Model.Booking.DiscountAmount?.ToString("C")</p>
-            <p><strong>Netto: @Model.Booking.NetAmount?.ToString("C")</strong></p>
-        </section>
-    }
 </section>
+
+@if (Model.Booking.ReservationId.HasValue)
+{
+    <section class="booking-result">
+        <h2>Reservering bevestigd</h2>
+
+        <p>Reserveringsnummer: <strong>@Model.Booking.ReservationId</strong></p>
+        <p>Status: @Model.Booking.ReservationStatus</p>
+
+        <h3>Prijsopbouw</h3>
+        <p>Bruto: @Model.Booking.GrossAmount?.ToString("C")</p>
+        <p>Korting: @Model.Booking.DiscountAmount?.ToString("C")</p>
+        <p><strong>Netto: @Model.Booking.NetAmount?.ToString("C")</strong></p>
+    </section>
+}
 
 <section class="trust-section" aria-labelledby="trust-heading">
     <h2 id="trust-heading" class="visually-hidden">Onze beloftes</h2>
@@ -206,16 +210,6 @@
                 <h3>Kampeerplaatsen</h3>
                 <p>Ruime plekken met elektra en modern sanitair</p>
                 <data class="accommodation-price" value="35">Vanaf €35/nacht</data>
-            </article>
-        </li>
-        <li>
-            <article class="accommodation-card">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
-                </svg>
-                <h3>Villa's</h3>
-                <p>Luxe verblijf met privézwembad en wellness</p>
-                <data class="accommodation-price" value="249">Vanaf €249/nacht</data>
             </article>
         </li>
     </ul>
