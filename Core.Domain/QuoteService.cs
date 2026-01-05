@@ -1,5 +1,18 @@
 ﻿namespace Area52.Core.Domain;
 
+/// <summary>
+/// Implementatie van IQuoteService.
+/// 
+/// Verantwoordelijkheden:
+/// - tarief voor het gekozen type opvragen via IRateRepository,
+/// - de juiste IPricingStrategy ophalen via IPricingStrategyFactory,
+/// - brutoprijs laten berekenen (FR-01),
+/// - kortingen toepassen (FR-02),
+/// - een Reservation-object vullen met prijsopbouw.
+/// 
+/// De service kent geen details van de database of UI; dit is pure domeinlogica.
+/// </summary>
+
 public class QuoteService : IQuoteService
 {
     private readonly IRateRepository _rateRepository;

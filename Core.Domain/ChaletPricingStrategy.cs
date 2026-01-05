@@ -1,5 +1,10 @@
 ﻿namespace Area52.Core.Domain;
 
+/// <summary>
+/// Prijsstrategie voor chalets:
+///   brutoprijs = nachten * (BaseNight + EnergyPerNight).
+/// </summary>
+
 public sealed class ChaletPricingStrategy : PricingStrategy
 {
     public override decimal CalculateGross(QuoteRequest request, Rate rate)

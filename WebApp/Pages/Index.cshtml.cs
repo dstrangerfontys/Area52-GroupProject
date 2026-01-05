@@ -1,9 +1,23 @@
-using Area52.Core.Domain;
+﻿using Area52.Core.Domain;
 using Area52.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Area52.WebApp.Pages;
+
+/// <summary>
+/// Razor PageModel voor de startpagina.
+/// 
+/// Verantwoordelijkheden:
+/// - tonen van de beginpagina (OnGet),
+/// - verwerken van het boekingsformulier (OnPost),
+/// - aanroepen van IReservationService om een reservering aan te maken,
+/// - vullen van het BookingViewModel met het resultaat.
+/// 
+/// Deze klasse bevat geen businesslogica of SQL; alle domeinregels lopen
+/// via de services in Core.Domain. Dit ondersteunt de 3-lagenarchitectuur:
+/// WebApp (UI) → Core.Domain (logica) → Infrastructure.DataAccess (data).
+/// </summary>
 
 public class IndexModel : PageModel
 {

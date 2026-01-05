@@ -4,6 +4,19 @@ using MySql.Data.MySqlClient;
 
 namespace Area52.Infrastructure.DataAccess;
 
+/// <summary>
+/// MySQL-implementatie van IRateRepository met ADO.NET.
+/// 
+/// Verantwoordelijk voor:
+/// - openen van een MySQL-verbinding,
+/// - uitvoeren van de SELECT-query op de Rates-tabel,
+/// - mappen van de resultset naar het domeinmodel Rate.
+/// 
+/// De naam begint met 'MySql' om duidelijk te maken dat dit een
+/// infrastructuur-specifieke implementatie is, losgekoppeld van de
+/// domeinlaag via de IRateRepository-interface.
+/// </summary>
+
 public class MySqlRateRepository : IRateRepository
 {
     private readonly string _connectionString;

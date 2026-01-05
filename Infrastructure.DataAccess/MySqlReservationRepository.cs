@@ -3,6 +3,19 @@ using MySql.Data.MySqlClient;
 
 namespace Area52.Infrastructure.DataAccess;
 
+/// <summary>
+/// MySQL-implementatie van IReservationRepository.
+/// 
+/// Verantwoordelijk voor:
+/// - INSERT van een nieuwe reservering in de Reservations-tabel,
+/// - ophalen van reserveringen (GetAll),
+/// - mappen van databasekolommen naar het domeinmodel Reservation.
+/// 
+/// Door deze klasse achter de interface te zetten, kan de rest van de
+/// applicatie worden ontwikkeld en getest zonder directe afhankelijkheid
+/// van MySQL of EF/ORM.
+/// </summary>
+
 public class MySqlReservationRepository : IReservationRepository
 {
     private readonly string _connectionString;

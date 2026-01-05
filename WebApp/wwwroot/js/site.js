@@ -1,4 +1,17 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿// Dit script verzorgt de interactieve onderdelen van de startpagina:
+//
+// - Verbergt de booking-widget (het reserveringsbalkje onderin) zodra de
+//   gebruiker naar de aanbiedingen-sectie scrollt, door de CSS-class
+//   'hidden' toe te voegen.
+//
+// - Laat elementen (items, aanbiedingen, accommodaties) met een
+//   fade-in/slide-up animatie in beeld verschijnen door de CSS-class
+//   'visible' toe te voegen zodra ze in viewport komen.
+//
+// Dit script werkt alleen op de presentatie en raakt de domein- of
+// datalaag niet; het is puur front-end gedrag.
+
+document.addEventListener('DOMContentLoaded', () => {
     const bookingWidget = document.querySelector('.booking-widget');
     const offersSection = document.querySelector('#aanbiedingen');
 

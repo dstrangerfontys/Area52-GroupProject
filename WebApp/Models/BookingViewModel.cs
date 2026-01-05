@@ -3,6 +3,19 @@ using Area52.Core.Domain;
 
 namespace Area52.WebApp.Models;
 
+/// <summary>
+/// ViewModel voor de startpagina (Index). 
+/// 
+/// Dit model is specifiek voor de UI en vormt de binding tussen:
+/// - het formulier in Index.cshtml (CheckIn, CheckOut, Guests, Type),
+/// - en de berekende reserveringsinformatie (ReservationId, prijzen).
+/// 
+/// Door een aparte ViewModel te gebruiken in plaats van direct het
+/// domeinmodel Reservation aan de view te koppelen, blijft de scheiding
+/// tussen UI en domein duidelijk en kunnen we validatie en presentatie
+/// onafhankelijk van de kernlogica aanpassen.
+/// </summary>
+
 public class BookingViewModel
 {
     [Required]
