@@ -845,3 +845,13 @@ ul {
         text-align: center;
     }
 }
+
+.offers-grid.search-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-rows: auto; 
+}
+
+    .offers-grid.search-grid li:nth-child(1),
+    .offers-grid.search-grid li:nth-child(4) {
+        grid-column: auto;
+    }

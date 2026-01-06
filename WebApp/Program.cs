@@ -7,6 +7,10 @@ builder.Services.AddRazorPages();
 
 var connectionString = builder.Configuration.GetConnectionString("Area52Database");
 
+builder.Services.AddScoped<IAccommodationRepository>(sp => 
+    new MySqlAccommodationRepository(connectionString));
+
+
 builder.Services.AddScoped<IRateRepository>(sp =>
     new MySqlRateRepository(connectionString!));
 
@@ -16,6 +20,7 @@ builder.Services.AddScoped<IReservationRepository>(sp =>
 builder.Services.AddScoped<IPricingStrategyFactory, PricingStrategyFactory>();
 builder.Services.AddScoped<IQuoteService, QuoteService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 
 var app = builder.Build();
 

@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBookingWidget = () => {
         const rect = offersSection.getBoundingClientRect();
 
-        // Als de top van de aanbiedingen-sectie bovenin beeld komt of hoger:
         if (rect.top <= 80) {
             bookingWidget.classList.add('hidden');
         } else {
@@ -52,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBookingWidget();
     }
 
-    // ---- animaties voor trust, offers, accommodaties ----
     const toAnimate = [
         ...document.querySelectorAll('.trust-item'),
         ...document.querySelectorAll('.offer-card'),
@@ -76,7 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         toAnimate.forEach(el => observer.observe(el));
     } else {
-        // Fallback: als IntersectionObserver niet bestaat, alles meteen zichtbaar maken
         toAnimate.forEach(el => el.classList.add('visible'));
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    var autoScrollSection = document.querySelector('[data-auto-scroll="true"]');
+
+    if (autoScrollSection) {
+        setTimeout(function () {
+            autoScrollSection.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
     }
 });

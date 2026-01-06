@@ -17,59 +17,73 @@ namespace Area52.WebApp.Pages;
 /// Deze klasse bevat geen businesslogica of SQL; alle domeinregels lopen
 /// via de services in Core.Domain. Dit ondersteunt de 3-lagenarchitectuur:
 /// WebApp (UI) → Core.Domain (logica) → Infrastructure.DataAccess (data).
+/// https://www.ibm.com/think/topics/three-tier-architecture
 /// </summary>
 
 public class IndexModel : PageModel
 {
+    private readonly IAvailabilityService _availabilityService;
+    private readonly IQuoteService _quoteService;
     private readonly IReservationService _reservationService;
-
-    public IndexModel(IReservationService reservationService)
-    {
-        _reservationService = reservationService;
-    }
 
     [BindProperty]
     public BookingViewModel Booking { get; set; } = new();
 
+    public IndexModel(
+        IAvailabilityService availabilityService,
+        IQuoteService quoteService,
+        IReservationService reservationService)
+    {
+        _availabilityService = availabilityService;
+        _quoteService = quoteService;
+        _reservationService = reservationService;
+    }
+
     public void OnGet()
     {
+        // evt. default waardes zetten
     }
 
-    public void OnPost()
+    public IActionResult OnPost()
     {
-        if (!ModelState.IsValid ||
-            Booking.CheckIn == null ||
-            Booking.CheckOut == null ||
-            !Booking.Type.HasValue)
+        if (!ModelState.IsValid)
         {
-            return;
+            return Page();
         }
 
-        try
+        var request = new QuoteRequest
         {
-            var request = new QuoteRequest
-            {
-                Type = Booking.Type.Value,
-                CheckIn = Booking.CheckIn.Value,
-                CheckOut = Booking.CheckOut.Value,
-                Persons = Booking.Type == AccommodationType.Campsite
-                    ? Booking.Guests
-                    : 0
-            };
+            Type = Booking.Type!.Value,
+            CheckIn = Booking.CheckIn!.Value,
+            CheckOut = Booking.CheckOut!.Value,
+            Persons = Booking.Guests
+        };
 
-            // NIEUW: reservering aanmaken via domeinservice
-            var reservation = _reservationService.CreateReservation(request);
+        var accommodations = _availabilityService
+            .SearchAvailable(request)
+            .ToList();
 
-            // Prijs + reserveringsinfo terugzetten in ViewModel
-            Booking.GrossAmount = reservation.GrossAmount;
-            Booking.DiscountAmount = reservation.DiscountAmount;
-            Booking.NetAmount = reservation.NetAmount;
-            Booking.ReservationId = reservation.Id;
-            Booking.ReservationStatus = reservation.Status.ToString();
-        }
-        catch (Exception ex)
+        var quote = _quoteService.CalculateQuote(request);
+
+        Booking.SearchResults = accommodations.Select(a => new AccommodationSearchResultViewModel
         {
-            ModelState.AddModelError(string.Empty, ex.Message);
-        }
+            AccommodationId = a.Id,
+            Name = a.Name,
+            Type = a.Type,
+            Capacity = a.Capacity,
+            NetPrice = quote.NetAmount
+        }).ToList();
+
+        Booking.ReservationId = null;
+        Booking.ReservationStatus = null;
+        Booking.GrossAmount = null;
+        Booking.DiscountAmount = null;
+        Booking.NetAmount = null;
+
+        return Page();
     }
+
+    // In de volgende fase voeg ik hier:
+    // public IActionResult OnPostReserve(int accommodationId) { ... }
+    // toe om echt te boeken.
 }
