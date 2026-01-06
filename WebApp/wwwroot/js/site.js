@@ -78,12 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    var autoScrollSection = document.querySelector('[data-auto-scroll="true"]');
+window.addEventListener('load', function () {
+    var autoScrollSection = document.getElementById('resultaten');
+
+    console.log('site.js geladen, resultaten-sectie gevonden?', !!autoScrollSection);
 
     if (autoScrollSection) {
         setTimeout(function () {
-            autoScrollSection.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+            autoScrollSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            console.log('Scroll uitgevoerd naar resultaten');
+        }, 200);
+    }
+    else {
+        console.log('Geen resultaten-sectie gevonden, geen scroll');
     }
 });
