@@ -219,58 +219,38 @@
 
 @if (Model.Booking.SearchResults != null && Model.Booking.SearchResults.Any())
 {
-    <section class="offers-section" id="resultaten" aria-labelledby="results-heading">
+    <section class="offers-section" id="resultaten">
         <header class="offers-header">
             <hgroup>
-                <h2 id="results-heading" class="offers-title">
-                    Beschikbare <em>accommodaties</em>
-                </h2>
+                <h2 class="offers-title">Beschikbare <em>accommodaties</em></h2>
                 <p class="offers-subtitle">
-                    Op basis van uw selectie tonen we de accommodaties die vrij zijn
-                    in deze periode.
+                    Op basis van uw selectie tonen we de accommodaties die beschikbaar zijn
+                    voor deze periode.
                 </p>
             </hgroup>
         </header>
 
-        <ul class="offers-grid search-grid">
+        <ul class="offers-grid">
             @foreach (var acc in Model.Booking.SearchResults)
             {
                 <li>
                     <article class="offer-card">
-                        @{
-                            string imageUrl = acc.Type switch
-                            {
-                                AccommodationType.Bungalow => "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80",
-                                AccommodationType.Chalet => "https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=800&q=80",
-                                _ => "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80"
-                            };
-                        }
-
-                        <img class="offer-card-bg" src="@imageUrl" alt="@acc.Name" loading="lazy" />
-
-                        @if (acc.NetPrice.HasValue)
-                        {
-                            <data class="offer-card-price" value="@acc.NetPrice.Value">
-                                Vanaf @acc.NetPrice.Value.ToString("C") <span>/verblijf</span>
-                            </data>
-                        }
-
-                        <header class="offer-card-content">
+                        <div class="offer-card-content">
                             <span class="offer-tag">@acc.Type</span>
                             <h3 class="offer-card-title">@acc.Name</h3>
                             <p class="offer-card-desc">
                                 Geschikt voor @acc.Capacity personen.
                             </p>
+                        </div>
 
-                            <a asp-page="/Accommodations/Details"
-                               asp-route-id="@acc.AccommodationId"
-                               asp-route-checkIn="@Model.Booking.CheckIn?.ToString("yyyy-MM-dd")"
-                               asp-route-checkOut="@Model.Booking.CheckOut?.ToString("yyyy-MM-dd")"
-                               asp-route-persons="@Model.Booking.Guests"
-                               class="btn btn-primary">
-                                Bekijk details
-                            </a>
-                        </header>
+                        @if (acc.NetPrice.HasValue)
+                        {
+                            <data class="offer-card-price" value="@acc.NetPrice.Value">
+                                Vanaf @acc.NetPrice.Value.ToString("C")
+                            </data>
+                        }
+
+                        <!-- Hier komt straks een 'Boek' button die post naar OnPostReserve -->
                     </article>
                 </li>
             }

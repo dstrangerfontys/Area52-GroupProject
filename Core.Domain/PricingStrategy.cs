@@ -5,8 +5,8 @@
 ///
 /// Dit is de kern van het Strategy-pattern in dit project:
 /// - Elke accommodatie (bungalow, chalet, kampeerplaats) krijgt
-///   een eigen concrete klasse die van <see cref="PricingStrategy"/> erft.
-/// - Alle strategieën gebruiken dezelfde methode <see cref="CalculateGross"/>,
+///   een eigen concrete klasse die van PricingStrategy
+/// - Alle strategieën gebruiken dezelfde methode CalculateGross
 ///   maar de implementatie verschilt per type.
 ///
 /// Waarom een abstracte class en geen interface?

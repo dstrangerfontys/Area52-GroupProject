@@ -21,6 +21,7 @@ builder.Services.AddScoped<IPricingStrategyFactory, PricingStrategyFactory>();
 builder.Services.AddScoped<IQuoteService, QuoteService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
+builder.Services.AddScoped<IDiscountStrategy, CampsiteFreeNightDiscountStrategy>();
 
 var app = builder.Build();
 
