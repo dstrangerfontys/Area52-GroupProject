@@ -234,24 +234,29 @@
             @foreach (var acc in Model.Booking.SearchResults)
             {
                 <li>
-                    <article class="offer-card">
-                        <div class="offer-card-content">
-                            <span class="offer-tag">@acc.Type</span>
-                            <h3 class="offer-card-title">@acc.Name</h3>
-                            <p class="offer-card-desc">
-                                Geschikt voor @acc.Capacity personen.
-                            </p>
-                        </div>
+                    <a asp-page="/Accommodations/Details"
+                       asp-route-id="@acc.AccommodationId"
+                       asp-route-checkIn="@Model.Booking.CheckIn?.ToString("yyyy-MM-dd")"
+                       asp-route-checkOut="@Model.Booking.CheckOut?.ToString("yyyy-MM-dd")"
+                       asp-route-persons="@Model.Booking.Guests"
+                       class="offer-card-link">
+                        <article class="offer-card">
+                            <div class="offer-card-content">
+                                <span class="offer-tag">@acc.Type</span>
+                                <h3 class="offer-card-title">@acc.Name</h3>
+                                <p class="offer-card-desc">
+                                    Geschikt voor @acc.Capacity personen.
+                                </p>
+                            </div>
 
-                        @if (acc.NetPrice.HasValue)
-                        {
-                            <data class="offer-card-price" value="@acc.NetPrice.Value">
-                                Vanaf @acc.NetPrice.Value.ToString("C")
-                            </data>
-                        }
-
-                        <!-- Hier komt straks een 'Boek' button die post naar OnPostReserve -->
-                    </article>
+                            @if (acc.NetPrice.HasValue)
+                            {
+                                <data class="offer-card-price" value="@acc.NetPrice.Value">
+                                    Vanaf @acc.NetPrice.Value.ToString("C")
+                                </data>
+                            }
+                        </article>
+                    </a>
                 </li>
             }
         </ul>

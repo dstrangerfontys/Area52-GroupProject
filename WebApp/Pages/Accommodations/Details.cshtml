@@ -1,0 +1,47 @@
+﻿@page
+@model Area52.WebApp.Pages.Accommodations.DetailsModel
+@using Area52.Core.Domain
+
+@{
+    ViewData["Title"] = "Accommodatie details";
+}
+
+<section class="accommodations-section">
+    <header class="accommodations-header">
+        <h2 class="accommodations-title">@Model.Accommodation?.Name</h2>
+        <p class="accommodations-subtitle">
+            @Model.Accommodation?.Type - geschikt voor @Model.Accommodation?.Capacity personen.
+        </p>
+    </header>
+
+    <article class="accommodation-card visible">
+        <p>
+            Verblijf van
+            <strong>@Model.CheckIn.ToString("dd-MM-yyyy")</strong>
+            tot
+            <strong>@Model.CheckOut.ToString("dd-MM-yyyy")</strong>
+            voor
+            <strong>@Model.Persons</strong> personen.
+        </p>
+
+        @if (Model.Quote is not null)
+        {
+            <p>Bruto prijs: @Model.Quote.GrossAmount.ToString("C")</p>
+            <p>Korting: @Model.Quote.DiscountAmount.ToString("C")</p>
+            <p><strong>Netto prijs: @Model.Quote.NetAmount.ToString("C")</strong></p>
+        }
+
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CheckIn" />
+            <input type="hidden" asp-for="CheckOut" />
+            <input type="hidden" asp-for="Persons" />
+
+            <button type="submit"
+                    asp-page-handler="Book"
+                    class="btn btn-primary">
+                Boek nu
+            </button>
+        </form>
+    </article>
+</section>

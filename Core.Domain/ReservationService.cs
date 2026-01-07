@@ -24,27 +24,27 @@ public class ReservationService : IReservationService
         _quoteService = quoteService;
         _reservationRepository = reservationRepository;
     }
-
-    public Reservation CreateReservation(QuoteRequest request)
+    public Reservation CreateReservation(QuoteRequest request, int accommodationId, int? customerId)
     {
-        // 1. Prijs berekenen (FR-01 + FR-02 via QuoteService)
         var quote = _quoteService.CalculateQuote(request);
 
-        // 2. Reservering object vullen
         var reservation = new Reservation
         {
+            AccommodationId = accommodationId,
+            CustomerId = customerId,
+
             Type = request.Type,
             CheckIn = request.CheckIn,
             CheckOut = request.CheckOut,
             Persons = request.Persons,
+
             GrossAmount = quote.GrossAmount,
             DiscountAmount = quote.DiscountAmount,
             NetAmount = quote.NetAmount,
+
             Status = ReservationStatus.Planned,
             CreatedAt = DateTime.UtcNow
         };
-
-        // 3. Opslaan via repository
         return _reservationRepository.Add(reservation);
     }
 }

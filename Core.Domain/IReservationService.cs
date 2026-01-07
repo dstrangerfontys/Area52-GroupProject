@@ -12,5 +12,5 @@
 
 public interface IReservationService
 {
-    Reservation CreateReservation(QuoteRequest request);
+    Reservation CreateReservation(QuoteRequest request, int accommodationId, int? customerId);
 }

@@ -16,6 +16,10 @@ public class Reservation
 {
     public int Id { get; set; }
 
+    public int AccommodationId { get; set; }
+
+    public int? CustomerId { get; set; }
+
     public AccommodationType Type { get; set; }
 
     public DateOnly CheckIn { get; set; }
@@ -24,6 +28,7 @@ public class Reservation
 
     public decimal GrossAmount { get; set; }
     public decimal DiscountAmount { get; set; }
+
     public decimal NetAmount { get; set; }
 
     public ReservationStatus Status { get; set; }

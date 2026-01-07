@@ -1,0 +1,87 @@
+﻿@page
+@model Area52.WebApp.Pages.Reservations.CreateModel
+@using Area52.Core.Domain
+
+@{
+    ViewData["Title"] = "Reservering bevestigen";
+}
+
+<section class="accommodations-section" aria-labelledby="reserve-heading">
+    <header class="accommodations-header">
+        <h2 id="reserve-heading" class="accommodations-title">
+            Bevestig uw reservering
+        </h2>
+        <p class="accommodations-subtitle">
+            Controleer uw gegevens en rond uw boeking af.
+        </p>
+    </header>
+
+    <div class="accommodations-grid">
+        <article class="accommodation-card visible">
+            <h3>@Model.Accommodation?.Name</h3>
+            <p>
+                Type: @Model.Accommodation?.Type<br />
+                Capaciteit: @Model.Accommodation?.Capacity personen
+            </p>
+
+            <p>
+                Verblijf: @Model.CheckIn.ToString("dd-MM-yyyy")
+                t/m @Model.CheckOut.ToString("dd-MM-yyyy")<br />
+                Gasten: @Model.Persons
+            </p>
+
+            @if (Model.Quote != null)
+            {
+                <p>
+                    Bruto prijs: @Model.Quote.GrossAmount.ToString("C")<br />
+                    Korting: @Model.Quote.DiscountAmount.ToString("C")<br />
+                    <strong>Te betalen: @Model.Quote.NetAmount.ToString("C")</strong>
+                </p>
+            }
+        </article>
+
+        <article class="accommodation-card visible">
+            <h3>Uw gegevens</h3>
+
+            <form method="post">
+                @* Verplichte hidden velden om de context vast te houden *@
+                <input type="hidden" asp-for="AccommodationId" />
+                <input type="hidden" asp-for="CheckIn" />
+                <input type="hidden" asp-for="CheckOut" />
+                <input type="hidden" asp-for="Persons" />
+
+                <div class="booking-field">
+                    <span>Naam</span>
+                    <input asp-for="Customer.Name" />
+                    <span asp-validation-for="Customer.Name"></span>
+                </div>
+
+                <div class="booking-field">
+                    <span>E-mailadres</span>
+                    <input asp-for="Customer.Email" />
+                    <span asp-validation-for="Customer.Email"></span>
+                </div>
+
+                <div class="booking-field">
+                    <span>Telefoonnummer</span>
+                    <input asp-for="Customer.Phone" />
+                    <span asp-validation-for="Customer.Phone"></span>
+                </div>
+
+                <div class="booking-field">
+                    <span>Adres</span>
+                    <input asp-for="Customer.Address" />
+                    <span asp-validation-for="Customer.Address"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Boek nu
+                </button>
+            </form>
+        </article>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

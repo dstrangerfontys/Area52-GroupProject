@@ -486,6 +486,7 @@ ul {
     }
 
 .offer-card {
+    display: block;
     position: relative;
     height: 100%;
     border-radius: 16px;
