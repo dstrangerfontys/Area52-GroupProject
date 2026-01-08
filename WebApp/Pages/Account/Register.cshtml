@@ -1,0 +1,64 @@
+﻿@page
+@model Area52.WebApp.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Account aanmaken";
+}
+
+<section class="accommodations-section">
+    <header class="accommodations-header">
+        <h2 class="accommodations-title">Account aanmaken</h2>
+        <p class="accommodations-subtitle">
+            Maak een Area 52 account aan om je reserveringen later terug te zien.
+        </p>
+    </header>
+
+    <article class="accommodation-card visible" style="max-width: 500px; margin: 0 auto; text-align: left;">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Phone"></label>
+                <input asp-for="Input.Phone" class="form-control" />
+                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Address"></label>
+                <input asp-for="Input.Address" class="form-control" />
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 16px;">
+                Account aanmaken
+            </button>
+        </form>
+    </article>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

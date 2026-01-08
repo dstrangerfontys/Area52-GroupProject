@@ -1,6 +1,7 @@
 using Area52.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace Area52.WebApp.Pages.Accommodations
 {
@@ -72,8 +73,16 @@ namespace Area52.WebApp.Pages.Accommodations
                 Persons = Persons
             };
 
-            // TODO: hier later echte customerId pakken uit ingelogde gebruiker
             int? customerId = null;
+
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idClaim != null && int.TryParse(idClaim.Value, out var parsedId))
+                {
+                    customerId = parsedId;
+                }
+            }
 
             var reservation = _reservationService.CreateReservation(request, Accommodation.Id, customerId);
 

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/js/site.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
     <header class="header" id="header">
@@ -24,8 +23,23 @@
         </nav>
 
         <nav class="auth-buttons">
-            <a href="#" class="btn btn-ghost">Inloggen</a>
-            <a href="#" class="btn btn-primary">Account aanmaken</a>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <span style="margin-right: 12px;">
+                    Ingelogd als @User.Identity.Name
+                </span>
+
+                <form method="post" asp-page="/Account/Logout" style="display:inline;">
+                    <button type="submit" class="btn btn-ghost">
+                        Uitloggen
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a asp-page="/Account/Login" class="btn btn-ghost">Inloggen</a>
+                <a asp-page="/Account/Register" class="btn btn-primary">Account aanmaken</a>
+            }
         </nav>
     </header>
 

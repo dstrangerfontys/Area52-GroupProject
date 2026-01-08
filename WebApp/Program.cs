@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Area52.Core.Domain;
 using Area52.Infrastructure.DataAccess;
 
@@ -10,18 +11,30 @@ var connectionString = builder.Configuration.GetConnectionString("Area52Database
 builder.Services.AddScoped<IAccommodationRepository>(sp => 
     new MySqlAccommodationRepository(connectionString));
 
-
 builder.Services.AddScoped<IRateRepository>(sp =>
     new MySqlRateRepository(connectionString!));
 
 builder.Services.AddScoped<IReservationRepository>(sp =>
     new MySqlReservationRepository(connectionString!));
 
+builder.Services.AddScoped<ICustomerRepository>(sp =>
+    new MySqlCustomerRepository(connectionString!));
+
 builder.Services.AddScoped<IPricingStrategyFactory, PricingStrategyFactory>();
 builder.Services.AddScoped<IQuoteService, QuoteService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<IDiscountStrategy, CampsiteFreeNightDiscountStrategy>();
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -35,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
